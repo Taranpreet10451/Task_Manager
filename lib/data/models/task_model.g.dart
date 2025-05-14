@@ -24,9 +24,9 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       priority: fields[4] as String,
       createdDate: fields[5] as DateTime,
       category: fields[6] as String,
-      dueDate: fields.containsKey(7) ? fields[7] as DateTime? : null,
-      completionPercentage: fields.containsKey(8) ? fields[8] as int : 0,
-      tags: fields.containsKey(9) ? (fields[9] as List).cast<String>() : const [],
+      dueDate: fields[7] as DateTime?,
+      completionPercentage: fields[8] as int,
+      tags: (fields[9] as List).cast<String>(),
     );
   }
 
@@ -82,11 +82,11 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) => TaskModel(
       dueDate: json['dueDate'] == null
           ? null
           : DateTime.parse(json['dueDate'] as String),
-      completionPercentage: json['completionPercentage'] as int? ?? 0,
-      tags: (json['tags'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+      completionPercentage:
+          (json['completionPercentage'] as num?)?.toInt() ?? 0,
+      tags:
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
     );
 
 Map<String, dynamic> _$TaskModelToJson(TaskModel instance) => <String, dynamic>{
